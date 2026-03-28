@@ -9,6 +9,10 @@ module.exports = defineConfig({
       overlay: false,
     },
     proxy: {
+      "/api/chat": {
+        target: "http://127.0.0.1:8000",
+        changeOrigin: true,
+      },
       "/api": {
         target: "http://127.0.0.1:8101",
         changeOrigin: true,

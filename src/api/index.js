@@ -18,13 +18,18 @@ const downloadRequest = axios.create({
 request.interceptors.response.use(
   (response) => {
     const body = response.data;
-    if (body?.code === 0) {
-      return body.data;
+    
+    // 💡 重点修改：兼容普通接口 (code === 0) 和 AI 接口 (带有 reply 字段)
+    if (body?.code === 0 || body?.reply !== undefined) {
+      // 💡 注意：普通接口返回 body.data，AI 接口因为没有 data 外壳，直接返回 body
+      return body?.code === 0 ? body.data : body; 
     }
+    
     Message.error(body?.message || "系统开小差了，请稍后重试");
     return Promise.reject(body);
   },
   (error) => {
+    // ... 下面的报错代码保持不变
     const message = error.response?.data?.message || "网络异常，请检查后端服务是否启动";
     if (error.response?.data?.code === 40100) {
       clearLoginUser();
@@ -132,6 +137,10 @@ export const salesApi = {
   returnOrder: (data) => request.post("/sales/return", data),
   listPage: (data) => request.post("/sales/list/page", data),
   exportOrders: (data) => triggerDownload("/sales/export", data, "销售订单.xlsx"),
+};
+
+export const chatApi = {
+  send: (data) => request.post("/chat", data),
 };
 
 export default request;

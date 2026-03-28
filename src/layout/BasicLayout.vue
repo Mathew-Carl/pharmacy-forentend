@@ -30,6 +30,7 @@
         </a-layout-content>
       </a-layout>
     </a-layout>
+    <AiChatWidget />
   </div>
   <router-view v-else />
 </template>
@@ -38,6 +39,7 @@
 import { computed, onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import SidebarMenu from "@/components/SidebarMenu.vue";
+import AiChatWidget from "@/components/AiChatWidget.vue";
 import { dashboardApi, userApi } from "@/api";
 import { clearLoginUser, getLoginUser } from "@/utils/auth";
 
