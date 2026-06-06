@@ -9,6 +9,8 @@ import LoginView from "@/views/LoginView.vue";
 import EmployeeView from "@/views/EmployeeView.vue";
 import RoleView from "@/views/RoleView.vue";
 import LogView from "@/views/LogView.vue";
+import StatisticsView from "@/views/StatisticsView.vue";
+import PurchaseOrderView from "@/views/PurchaseOrderView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -75,5 +77,28 @@ export const routes: Array<RouteRecordRaw> = [
     name: "日志监控",
     component: LogView,
     meta: { menuKey: "/log", menuCode: "log" },
+  },
+  {
+    path: "/purchase-order",
+    name: "采购订单",
+    component: PurchaseOrderView,
+    meta: { 
+      title: "采购订单", 
+      icon: "document",
+      menuKey: "/purchase-order",
+      menuCode: "purchase_order"
+    }
+  },
+  // 更新统计报表模块
+  {
+    path: "/statistics",
+    name: "统计报表",
+    component: StatisticsView, 
+    meta: {
+      title: "统计报表",
+      icon: "chart",
+      menuKey: "/statistics",
+      menuCode: "statistics",
+    },
   },
 ];

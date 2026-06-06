@@ -143,4 +143,54 @@ export const chatApi = {
   send: (data) => request.post("/chat", data),
 };
 
+
+export const purchaseApi = {
+  // 创建采购订单
+  create: (data) => request.post("/purchase/create", data),
+  // 分页查询采购订单列表
+  listPage: (data) => request.post("/purchase/list/page", data),
+  // 获取采购订单详情
+  detail: (id) => request.get(`/purchase/detail/${id}`),
+  // 审核采购订单
+  audit: (data) => request.post("/purchase/audit", data),
+  // 删除采购订单
+  remove: (id) => request.post(`/purchase/delete/${id}`),
+  // 生成智能补货建议
+  getSuggestions: () => request.get("/purchase/suggestions"),
+  // 一键生成采购单
+  generate: (data) => request.post("/purchase/generate", null, { params: data }),
+  // 采购入库确认
+  confirmInbound: (id, data) => request.post(`/purchase/inbound/${id}`, null, { params: data }),
+  // 导出采购订单
+  exportOrders: (data) => triggerDownload("/purchase/export", data, "采购订单.xlsx"),
+};
+
+export const reportApi = {
+  // 获取库存总价值统计（按分类）
+  getInventoryValueByCategory: () => request.get("/report/inventory/value"),
+  // 获取库存数量分布（按分类）
+  getInventoryQuantityByCategory: () => request.get("/report/inventory/quantity"),
+  // 获取临期药品统计列表
+  getExpiringMedicines: (days = 30) => request.get("/report/inventory/expiring", { params: { days } }),
+  // 获取缺货药品统计
+  getShortageMedicines: () => request.get("/report/inventory/shortage"),
+  // 获取按日销售统计
+  getDailySalesStats: (params) => request.get("/report/sales/daily", { params }),
+  // 获取按月销售统计
+  getMonthlySalesStats: (params) => request.get("/report/sales/monthly", { params }),
+  // 获取按年销售统计
+  getYearlySalesStats: (year) => request.get("/report/sales/yearly", { params: { year } }),
+  // 获取药品销售排行
+  getSalesRanking: (params) => request.get("/report/sales/ranking", { params }),
+  // 获取首页仪表盘核心指标
+  getDashboardMetrics: () => request.get("/report/dashboard/metrics"),
+  // 获取销售趋势数据（折线图）
+  getSalesTrend: (days = 7) => request.get("/report/chart/sales-trend", { params: { days } }),
+  // 获取库存分类占比数据（饼图）
+  getCategoryInventoryPieData: () => request.get("/report/chart/category-pie"),
+  // 获取出入库流水趋势
+  getInOutFlowTrend: (days = 7) => request.get("/report/chart/inout-flow", { params: { days } }),
+  // 导出统计报表
+  exportReport: (params) => triggerDownload("/report/export", null, "统计报表.xlsx", params),
+};
 export default request;
